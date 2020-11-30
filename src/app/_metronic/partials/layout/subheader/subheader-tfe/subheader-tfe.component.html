@@ -1,0 +1,28 @@
+<!--begin::Subheader-->
+<div class="subheader py-2 py-lg-12" [ngClass]="subheaderCSSClasses" id="kt_subheader">
+  <div [ngClass]="subheaderContainerCSSClasses"
+    class="d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+    <!--begin::Info-->
+    <div class="d-flex align-items-center flex-wrap mr-1"></div>
+    <!--end::Info-->
+
+    <ng-container *ngIf="currentRoute.startsWith('stats')">
+      <!--begin::Toolbar-->
+      <div class="d-flex align-items-center">
+        <!--begin::Button-->
+        <a [routerLink]="['/stats/top100']" class="btn font-weight-bold py-3 px-6 mr-2" [ngClass]="currentRoute === 'stats/top100' ? 'btn-white' : 'btn-transparent-white'">
+          Top 100
+        </a>
+        <!--end::Button-->
+
+        <!--begin::Button-->
+        <a [routerLink]="['/stats/individual']" class="btn font-weight-bold py-3 px-6 ml-5" [ngClass]="currentRoute.startsWith('stats/individual') ? 'btn-white' : 'btn-transparent-white'">
+          Individual
+        </a>
+        <!--end::Button-->
+      </div>
+      <!--end::Toolbar-->
+    </ng-container>
+  </div>
+</div>
+<!--end::Subheader-->

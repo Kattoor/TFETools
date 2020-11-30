@@ -1,0 +1,28 @@
+.filterable-header:hover .svg-filter-icon:not(.filter-icon-active) {
+    opacity: .5;
+}
+
+.filter-icon-active {
+    opacity: 1;
+}
+
+.filter-icon-inactive {
+    opacity: 0;
+}
+
+.filterable-header:hover {
+    cursor: pointer;
+}
+
+.filterable-header {
+    user-select: none;
+}
+
+.clickable-user:hover {
+    background-color: #F3F6F9;
+    cursor: pointer;
+}
+
+.column-header-right {
+    text-align: right;
+}

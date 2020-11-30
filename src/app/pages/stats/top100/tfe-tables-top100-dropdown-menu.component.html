@@ -1,0 +1,19 @@
+
+<ul class="navi navi-hover">
+  <li class="navi-header font-weight-bold py-4">
+    <span class="font-size-lg">Choose Columns</span>
+  </li>
+  <li class="navi-separator mb-3 opacity-70"></li>
+
+  <li class="navi-item" *ngFor="let column of columns">
+    <a class="navi-link cursor-pointer" (click)="change(column)">
+      <label class="checkbox checkbox-inline pr-2">
+        <input type="checkbox" [checked]="column.checked" (change)="change(column)"/>
+        <span></span>
+      </label>
+      <span class="navi-text">
+        <span class="">{{column.columnName | uppercase}}</span>
+      </span>
+    </a>
+  </li>
+</ul>

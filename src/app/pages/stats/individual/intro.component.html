@@ -1,0 +1,8 @@
+<div class="card card-custom card-stretch gutter-b">
+    <div class="card-header border-0">
+        <div class="card-body">
+            <div *ngIf="stats$ | async as stats" class="text-dark font-weight-bolder font-size-h2 mt-3">{{stats[0].displayName}}</div>
+        </div>
+    </div>
+    <div class="col-lg-9"></div>
+</div>

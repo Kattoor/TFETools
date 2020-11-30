@@ -1,0 +1,1 @@
+INSERT INTO usersbyoptin(steamid) VALUES ($1)

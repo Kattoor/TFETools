@@ -1,0 +1,53 @@
+<!--
+<div class="row row-cols-lg-2">
+    <app-intro class="col-lg-4" [name$]="name$"></app-intro>
+</div>
+
+<div class="row row-cols-lg-2">
+    <app-kd-chart class="col-lg-6" [kills$]="kills$" [deaths$]="deaths$"></app-kd-chart>
+    <app-hs-chart class="col-lg-6" [kills$]="kills$" [headshots$]="headshots$"></app-hs-chart>
+</div>
+
+<div class="row row-cols-lg-2">
+    <app-zone-time-chart class="col-lg-6" [zonetime$]="zonetime$"></app-zone-time-chart>
+    <app-wins-losses-draws-chart class="col-lg-6" [winsLossesDraws$]="winsLossesDraws$"></app-wins-losses-draws-chart>
+</div>
+
+<div class="row row-cols-lg-2">
+    <app-activity class="col-lg-6" [stats$]="activityStats$"></app-activity>
+</div>
+-->
+
+<ng-container *ngIf="!hasParams">
+    <!--<a href="http://localhost:4201/auth/steam">-->
+    <a href="http://tfe.tools/auth/steam">
+        <img src="https://community.cloudflare.steamstatic.com/public/images/signinthroughsteam/sits_02.png">
+    </a>
+</ng-container>
+
+<ng-container *ngIf="hasParams">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="row">
+                <app-intro class="col-lg-12" [stats$]="name$"></app-intro>
+                <app-activity class="col-lg-12" [stats$]="activity$"></app-activity>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="row">
+                <app-kd-chart class="col-lg-12" [stats$]="killsDeaths$"></app-kd-chart>
+            </div>
+            <div class="row">
+                <app-hs-chart class="col-lg-12" [stats$]="headshots$"></app-hs-chart>
+            </div>
+            <div class="row">
+                <app-zone-time-chart class="col-lg-12" [stats$]="tkothZoneTimer$"></app-zone-time-chart>
+            </div>
+            <div class="row">
+                <app-wins-losses-draws-chart class="col-lg-12"
+                                             [stats$]="gameWinsLossesDraws$"></app-wins-losses-draws-chart>
+            </div>
+        </div>
+    </div>
+</ng-container>
