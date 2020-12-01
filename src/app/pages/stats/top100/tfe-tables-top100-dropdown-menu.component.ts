@@ -4,6 +4,7 @@ import {CheckableColumn} from './tfe-tables-top100-stats.component';
 @Component({
     selector: 'app-tfe-tables-top100-dropdown-menu',
     templateUrl: './tfe-tables-top100-dropdown-menu.component.html',
+    styleUrls: ['./tfe-tables-top100-dropdown-menu.component.css']
 })
 export class TfeTablesTop100DropdownMenuComponent implements OnInit {
 

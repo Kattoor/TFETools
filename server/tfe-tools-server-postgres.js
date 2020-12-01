@@ -1,7 +1,5 @@
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = '0';
 
-const https = require('https');
-
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -34,7 +32,8 @@ const queries = {
     tkothZoneTimer: fs.readFileSync('./tkothZoneTimer.sql', 'utf-8'),
     gameWinsLossesDraws: fs.readFileSync('./gameWinsLossesDraws.sql', 'utf-8'),
     displayName: fs.readFileSync('./displayName.sql', 'utf-8'),
-    addUserByOptIn: fs.readFileSync('./addUserByOptIn.sql', 'utf-8')
+    addUserByOptIn: fs.readFileSync('./addUserByOptIn.sql', 'utf-8'),
+    rooms: fs.readFileSync('./lobbies.sql', 'utf-8')
 };
 
 async function query(text, values) {
@@ -46,53 +45,7 @@ async function query(text, values) {
     }
 }
 
-function getServerIPsBySteamID(steamId) {
-    return new Promise((resolve, reject) => {
-        const url = 'https://api.steampowered.com/IGameServersService/GetServerIPsBySteamID/v1?key=&input_json=%7B%22server_steamids%22:%5B' + steamId + '%5D%7D';
-        https.get(url, res => {
-            res.setEncoding('utf8');
-            let rawData = '';
-            res.on('data', chunk => rawData += chunk);
-            res.on('end', async () => resolve(rawData));
-        }).on('error', () => reject());
-    });
-}
-
-function getFlagsByIp(ip) {
-    return new Promise((resolve, reject) => {
-        const url = 'http://api.ipstack.com/' + ip + '?access_key=';
-        http.get(url, res => {
-            res.setEncoding('utf8');
-            let rawData = '';
-            res.on('data', chunk => rawData += chunk);
-            res.on('end', async () => resolve(rawData));
-        }).on('error', () => reject());
-    });
-}
-
-function getRooms() {
-    return new Promise((resolve, reject) => {
-        https.get('https://ns548971.ip-66-70-179.net:80/tfe-rest-api/v1/rooms-info/get', res => {
-            res.setEncoding('utf8');
-            let rawData = '';
-            res.on('data', chunk => rawData += chunk);
-            res.on('end', async () => resolve(rawData));
-        }).on('error', () => reject());
-    });
-}
-
-let rooms;
-
 (async () => {
-    rooms = await getRooms();
-    setInterval(async () => {
-        try {
-            rooms = await getRooms()
-        } catch (e) {
-            console.log('Error getting rooms');
-        }
-    }, 10000);
-
     http.createServer(async (request, response) => {
         console.log(request.url);
         await handleReq(request, response);
@@ -112,14 +65,15 @@ async function handleReq(request, response) {
             const user = await steam.authenticate(request);
             await query(queries.addUserByOptIn, [user.steamid]);
             /*response.writeHead(302, {'Location': 'http://localhost:4200/stats/individual;id=' + user.steamid});*/
-            response.writeHead(302, {'Location': 'http://tfe.tools/stats/individual;id=' + user.steamid});
+            response.writeHead(302, {'Location': 'http://185.183.182.44/stats/individual;id=' + user.steamid});
             response.end();
         } catch (error) {
             console.error(error);
         }
     } else if (url.startsWith('/api/')) {
         if (url === '/api/lobbies/rooms-info') {
-            response.end(rooms, 'utf-8');
+            const rooms = await query(queries.rooms);
+            response.end(JSON.stringify(rooms), 'utf-8');
         } else if (url === '/api/stats/top100') {
             const top100 = await query(queries.top100);
             response.end(JSON.stringify(top100), 'utf-8');

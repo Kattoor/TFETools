@@ -44,12 +44,12 @@ export class LayoutInitService {
   }
 
   private initLayout() {
-    const selfBodyBackgroundImage = this.layout.getProp(
+   /* const selfBodyBackgroundImage = this.layout.getProp(
       'self.backgroundImage'
     );
     if (selfBodyBackgroundImage) {
       document.body.style.backgroundImage = `url("./assets/media/${selfBodyBackgroundImage}")`;
-    }
+    }*/
 
     const selfBodyClass = (
       this.layout.getProp('self.body.class') || ''

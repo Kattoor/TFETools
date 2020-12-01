@@ -1,0 +1,19 @@
+.card {
+    background-color: rgb(52, 66, 59) !important;
+}
+
+.card-header {
+
+}
+
+.card-body {
+
+}
+
+.card span, .card a, .card p, .card div, .card h3 {
+    color: white !important;
+}
+
+.card text {
+    fill: white !important;
+}

@@ -15,9 +15,10 @@
       </div>
     </div>
   </div>
-  <div class="card-body pt-3 pb-0">
+  <div class="card-body pt-3 pb-0 tfe-card">
     <div class="table-responsive">
-      <table class="table table-head-custom table-vertical-center table-head-bg table-borderless">
+      <!--<table class="table table-head-custom table-vertical-center table-head-bg table-borderless">-->
+      <table class="table table-head-custom table-vertical-center table-borderless">
         <thead>
           <tr>
             <ng-container *ngFor="let column of columns">
@@ -29,9 +30,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let stats of sortedTop100Stats$ | async" class="clickable-user" (click)="loadIndividualUser(stats._id)">
+          <tr *ngFor="let stats of sortedTop100Stats$ | async" (click)="loadIndividualUser(stats._id)" class="alternate-color clickable-user">
             <ng-container *ngFor="let column of columns">
-              <td [ngClass]="column.textRight ? 'text-right' : ''" [ngStyle]="column.backgroundColor ? {'background-color': column.backgroundColor} : {}" *ngIf="column.checked">
+              <!--<td [ngClass]="column.textRight ? 'text-right' : ''" [ngStyle]="column.backgroundColor ? {'background-color': column.backgroundColor} : {}" *ngIf="column.checked">-->
+              <td [ngClass]="column.textRight ? 'text-right' : ''" *ngIf="column.checked">
                 <p *ngIf="!column.isLabel" class="text-dark-75 font-weight-bolder mb-1 font-size-lg">{{stats[column.columnName]}}</p>
                 <span *ngIf="column.isLabel" class="label label-lg label-inline" [ngClass]="stats[column.columnName] < column.dangerThreshold ? 'label-danger' : 'label-success'">{{stats[column.columnName] | number: '1.2-2'}}</span>
               </td>

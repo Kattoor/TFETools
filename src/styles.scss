@@ -17,6 +17,8 @@
 
 @import "./assets/sass/style.angular.scss";
 
+@import "./card.css";
+
 // hide bootstrap dropdown arrow globally
 .dropdown-toggle::after {
   display: none !important;

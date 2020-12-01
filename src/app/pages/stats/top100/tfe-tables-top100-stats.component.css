@@ -19,10 +19,42 @@
 }
 
 .clickable-user:hover {
-    background-color: #F3F6F9;
+    background-color: rgba(0, 0, 0, .2) !important;
     cursor: pointer;
 }
 
 .column-header-right {
     text-align: right;
+}
+
+
+.alternate-color:nth-child(odd) {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: -10px;
+}
+
+td {
+    border-style: solid none;
+}
+
+td:first-child {
+    border-left-style: solid;
+    border-top-left-radius: .42rem;
+    border-bottom-left-radius: .42rem;
+
+}
+
+td:last-child {
+    border-right-style: solid;
+    border-bottom-right-radius: .42rem;
+    border-top-right-radius: .42rem;
+}
+
+.dropdown-menu {
+    background-color: #546B5F;
 }

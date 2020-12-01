@@ -1,4 +1,16 @@
 :host {
 	height: 100%;
 	margin: 0;
+	background-color:  #0c110f !important;
+}
+
+.wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 350px;
+	/*background: linear-gradient(180deg, rgba(20, 21, 27, 0.5) 0%, #14151B 100%), url('../assets/media/bg/tfe-bg-new.png'), fixed top center ;*/
+	background: linear-gradient(180deg, rgba(20, 21, 27, 0.5) 0%, rgba(12, 17, 15, 1) 100%), url("../assets/media/bg/tfe-bg-new.png") top center;
+	z-index: -1;
 }

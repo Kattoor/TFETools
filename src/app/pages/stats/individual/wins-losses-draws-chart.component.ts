@@ -43,7 +43,7 @@ export class WinsLossesDrawsChartComponent implements OnInit {
                 toolbar: {
                     show: true,
                     tools: {
-                        download: true,
+                        download: false,
                         selection: false,
                         zoom: false,
                         zoomin: false,
@@ -59,15 +59,19 @@ export class WinsLossesDrawsChartComponent implements OnInit {
             markers: {
                 size: 0,
             },
-            stroke: {curve: 'smooth'},
+            stroke: {curve: 'smooth', width: 1},
             grid: {
+                borderColor: 'rgba(0, 0, 0, .4)',
                 row: {
-                    colors: ['#f3f3f3', 'transparent'],
-                    opacity: 0.5
+                    colors: ['rgba(0, 0, 0, .3)', 'rgba(0, 0, 0, 0)'],
                 }
             },
             xaxis: {
-                type: 'datetime'
+                type: 'datetime',
+                tooltip: {
+                    enabled: false,
+                    offsetX: 0,
+                }
             },
             yaxis: [
                 {
@@ -80,7 +84,8 @@ export class WinsLossesDrawsChartComponent implements OnInit {
                 shared: true,
                 x: {
                     format: 'dd MMM - HH:mm'
-                }
+                },
+                theme: 'dark'
             }
         };
     }
