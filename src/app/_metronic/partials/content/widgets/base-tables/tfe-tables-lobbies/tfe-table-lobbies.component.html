@@ -86,7 +86,7 @@
                       <div class="col-lg-6" style="text-align: center;">
                         <h2>Task Force Elite</h2>
                         <div *ngFor="let player of lobby.blueTeam">
-                          <a [href]="'http://localhost:4200/stats/individual;id=' + player.pid" class="text-hover-primary mb-1">
+                          <a [routerLink]="['/stats/individual', {id: player.pid}]" class="text-hover-primary mb-1">
                             {{player.displayName}}
                           </a>
                         </div>
@@ -95,7 +95,7 @@
                       <div class="col-lg-6" style="text-align: center;">
                         <h2>Red Spear</h2>
                         <div *ngFor="let player of lobby.redTeam">
-                          <a [href]="'http://localhost:4200/stats/individual;id=' + player.pid" class="text-hover-primary mb-1">
+                          <a [routerLink]="['/stats/individual', {id: player.pid}]" class="text-hover-primary mb-1">
                             {{player.displayName}}
                           </a>
                         </div>

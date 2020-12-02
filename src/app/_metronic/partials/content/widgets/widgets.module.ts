@@ -49,6 +49,7 @@ import { Widget4DropdownComponent } from './lists/lists-widget4/widget4-dropdown
 import { TfeTableLobbiesComponent } from './base-tables/tfe-tables-lobbies/tfe-table-lobbies.component';
 import { TfeWidgetStatsComponent } from './mixed/tfe-widget-stats/tfe-widget-stats.component';
 import { TfeWidgetStats2Component } from './mixed/tfe-widget-stats2/tfe-widget-stats2.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -98,13 +99,14 @@ import { TfeWidgetStats2Component } from './mixed/tfe-widget-stats2/tfe-widget-s
         Widget4DropdownComponent,
         Widget3DropdownComponent
     ],
-  imports: [
-    CommonModule,
-    DropdownMenusModule,
-    InlineSVGModule,
-    NgApexchartsModule,
-    NgbDropdownModule,
-  ],
+    imports: [
+        CommonModule,
+        DropdownMenusModule,
+        InlineSVGModule,
+        NgApexchartsModule,
+        NgbDropdownModule,
+        RouterModule,
+    ],
   exports: [
     TfeTableLobbiesComponent,
     TfeWidgetStatsComponent,
