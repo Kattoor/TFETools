@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {combineLatest, map} from 'rxjs/operators';
 import {Router} from '@angular/router';
@@ -19,6 +19,7 @@ export interface CheckableColumn {
     selector: 'app-tfe-tables-top100-stats',
     templateUrl: './tfe-tables-top100-stats.component.html',
     styleUrls: ['./tfe-tables-top100-stats.component.css'],
+    encapsulation: ViewEncapsulation.None /* For tooltip style */
 })
 export class TfeTablesTop100StatsComponent implements OnInit {
 
@@ -83,7 +84,8 @@ export class TfeTablesTop100StatsComponent implements OnInit {
                                 }
                             }
                         });
-                        return top100Stats;
+
+                        return top100Stats.map((stats, index) => Object.assign({}, stats, {position: index + 1}));
                     }));
     }
 
@@ -112,5 +114,20 @@ export class TfeTablesTop100StatsComponent implements OnInit {
 
     async loadIndividualUser(steamId: string) {
         await this.router.navigate(['stats/individual', {id: steamId}]);
+    }
+
+    setRankUpdateClass(stats: Stats) {
+        const delta = stats.currentRank - stats.previousRank;
+        if (delta > 1) {
+            return 'ki-double-arrow-down text-danger';
+        } else if (delta === 1) {
+            return 'ki-arrow-down text-danger';
+        } else if (delta === 0) {
+            return 'ki-minus text-primary';
+        } else if (delta === -1) {
+            return 'ki-arrow-up text-success';
+        } else {
+            return 'ki-double-arrow-up text-success';
+        }
     }
 }

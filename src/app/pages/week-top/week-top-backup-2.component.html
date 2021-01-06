@@ -1,0 +1,38 @@
+<!-- show result[0] (= top player) each week, when click on card, show top 10 players of week?-->
+
+<div style="display: flex; flex-direction: column;">
+    <div *ngFor="let yearRecord of topUsers$ | async">
+        <h1 style="color: white;">{{yearRecord.year}}</h1>
+        <div style="display: flex; flex-direction: column;">
+            <div *ngFor="let monthRecord of yearRecord.months" style="padding-left: 25px;">
+                <h2 style="color: white;">{{months[monthRecord.month]}}</h2>
+                <div style="display: flex; flex-direction: column;">
+                    <div *ngFor="let weekRecord of monthRecord.weekRecords; index as i" class="col mb-3">
+                        <h3 style="color: white;">Week {{monthRecord.weekRecords.length - i}}</h3>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between">
+                            <div *ngFor="let category of weekRecord.categories">
+                                <div class="card card-custom h-100" style="max-width: 184px;">
+                                    <img [src]="category.steamAvatarUrl" class="card-img-top" alt="..."
+                                         style="height: 184px; width: 184px;">
+                                    <div style="position: absolute; top: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.5);">
+                                        <p style="text-align: center; font-size: 20px; padding: 10px; margin: 0;">{{category.type | uppercase}}</p>
+                                    </div>
+                                    <div class="card-body"
+                                         style="display: flex; flex-direction: row; padding-left: 5px; padding-right: 5px; min-width: 0;">
+                                        <div style="display: flex; flex-direction: column; overflow: hidden; flex-grow: 1">
+                                            <p *ngFor="let user of category.users" class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{user}}</p>
+                                        </div>
+                                        <div style="display: flex; flex-direction: column; text-align: right; flex-shrink: 0;">
+                                            <p *ngFor="let value of category.values"
+                                               class="card-text">{{value}} {{category.valueLabel}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

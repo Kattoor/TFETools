@@ -1,46 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-
-interface KillsDeathsResult {
-    kills: number;
-    deaths: number;
-    ratio: number;
-    date: number;
-}
-
-interface ActivityResult {
-    level: number;
-    plays: number;
-    wins: number;
-    draws: number;
-    kills: number;
-    date: number;
-}
-
-interface HeadshotsResult {
-    kills: number;
-    heads: number;
-    ratio: number;
-    date: number;
-}
-
-interface GameWinsLossesDrawsResult {
-    wins: number;
-    losses: number;
-    draws: number;
-    date: number;
-}
-
-interface TkothZoneTimerResult {
-    timeInZone: number;
-    date: number;
-}
-
-interface DisplayName {
-    displayName: string;
-}
+import {LayoutService} from '../../../_metronic/core';
 
 @Component({
     selector: 'app-individual-stats',
@@ -48,37 +8,60 @@ interface DisplayName {
 })
 export class IndividualStatsComponent implements OnInit {
 
-    hasParams = false;
+    @Input() id$: Observable<string>;
 
-    name$: Observable<DisplayName[]>;
-    killsDeaths$: Observable<KillsDeathsResult[]>;
-    activity$: Observable<ActivityResult[]>;
-    headshots$: Observable<HeadshotsResult[]>;
-    gameWinsLossesDraws$: Observable<GameWinsLossesDrawsResult[]>;
-    tkothZoneTimer$: Observable<TkothZoneTimerResult[]>;
+    colorSuccess: string;
+    colorWarning: string;
+    colorDanger: string;
+    chartOptions: any = {};
 
-    constructor(private route: ActivatedRoute, private http: HttpClient) {
+    constructor(private layout: LayoutService) {
+        this.colorSuccess = this.layout.getProp('js.colors.theme.base.success');
+        this.colorWarning = this.layout.getProp('js.colors.theme.base.warning');
+        this.colorDanger = this.layout.getProp('js.colors.theme.base.danger');
     }
 
     ngOnInit(): void {
-        this.route.params.subscribe(params => {
-            if (params.id === undefined) {
-                this.hasParams = false;
-            } else {
-                this.hasParams = true;
+        this.chartOptions = this.getChartOptions();
+    }
 
-                this.name$ = this.http.get<DisplayName[]>('/api/stats/individual/displayname?id=' + params.id);
-
-                this.killsDeaths$ = this.http.get<KillsDeathsResult[]>('/api/stats/individual/killsdeaths?id=' + params.id);
-
-                this.activity$ = this.http.get<ActivityResult[]>('/api/stats/individual/activity?id=' + params.id);
-
-                this.headshots$ = this.http.get<HeadshotsResult[]>('/api/stats/individual/headshots?id=' + params.id);
-
-                this.gameWinsLossesDraws$ = this.http.get<GameWinsLossesDrawsResult[]>('/api/stats/individual/gamewinslossesdraws?id=' + params.id);
-
-                this.tkothZoneTimer$ = this.http.get<TkothZoneTimerResult[]>('/api/stats/individual/tkothzonetimer?id=' + params.id);
-            }
-        });
+    getChartOptions() {
+        return {
+            series: [200, 75, 5],
+            chart: {
+                height: 350,
+                type: 'donut'
+            },
+            stroke: {
+                width: 0
+            },
+            dataLabels: {
+                enabled: false
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: 'Plays'
+                            },
+                            name: {
+                                show: true,
+                            },
+                            value: {
+                                show: true,
+                                formatter: (val, obj) => val + ' (' + Math.round((val / obj.config.series.reduce((a, b) => a + b) * 100)) + '%)'
+                            }
+                        }
+                    }
+                }
+            },
+            labels: ['Wins', 'Losses', 'Draws'],
+            colors: [this.colorSuccess, this.colorDanger, this.colorWarning],
+            legend: {show: false},
+            tooltip: {enabled: false},
+        };
     }
 }

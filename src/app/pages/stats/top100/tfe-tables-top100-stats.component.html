@@ -17,10 +17,10 @@
   </div>
   <div class="card-body pt-3 pb-0 tfe-card">
     <div class="table-responsive">
-      <!--<table class="table table-head-custom table-vertical-center table-head-bg table-borderless">-->
       <table class="table table-head-custom table-vertical-center table-borderless">
         <thead>
           <tr>
+            <th style="width: 30px; max-width: 30px; overflow: hidden;"></th>
             <ng-container *ngFor="let column of columns">
               <th [ngClass]="(column.textRight ? 'column-header-right' : '') + ' ' + (column.notSortable ? '' : 'filterable-header')" *ngIf="column.checked" (click)="!column.notSortable && headerClicked(column.columnName)">
                 <span [inlineSVG]="getSvg()" cacheSVG="true" [ngClass]="setIconClasses(column.columnName)"></span>
@@ -31,8 +31,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let stats of sortedTop100Stats$ | async" (click)="loadIndividualUser(stats._id)" class="alternate-color clickable-user">
+            <td style="width: 30px; max-width: 30px; overflow: hidden;">
+              <i class="ki" [ngClass]="setRankUpdateClass(stats)" placement="left" [disableTooltip]="stats.currentRank - stats.previousRank === 0" [ngbTooltip]="stats.previousRank + ' -> ' + stats.currentRank" [openDelay]="300" [closeDelay]="500" tooltipClass="green-tooltip"></i>
+            </td>
             <ng-container *ngFor="let column of columns">
-              <!--<td [ngClass]="column.textRight ? 'text-right' : ''" [ngStyle]="column.backgroundColor ? {'background-color': column.backgroundColor} : {}" *ngIf="column.checked">-->
               <td [ngClass]="column.textRight ? 'text-right' : ''" *ngIf="column.checked">
                 <p *ngIf="!column.isLabel" class="text-dark-75 font-weight-bolder mb-1 font-size-lg">{{stats[column.columnName]}}</p>
                 <span *ngIf="column.isLabel" class="label label-lg label-inline" [ngClass]="stats[column.columnName] < column.dangerThreshold ? 'label-danger' : 'label-success'">{{stats[column.columnName] | number: '1.2-2'}}</span>

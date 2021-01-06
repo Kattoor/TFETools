@@ -1,8 +1,48 @@
-<div class="card card-custom card-stretch gutter-b">
-    <div class="card-header border-0">
-        <div class="card-body">
-            <div *ngIf="stats$ | async as stats" class="text-dark font-weight-bolder font-size-h2 mt-3">{{stats[0].displayName}}</div>
+<div class="card card-custom" style="height: 65%">
+    <div style="display: flex; height: 100%; align-items: center; justify-content: space-between">
+        <p *ngIf="name$ | async as stats"
+           class="text-dark font-weight-bolder font-size-h2 mt-3 pl-5">{{stats[0].displayName}}</p>
+
+        <div *ngIf="expAndLevel$ | async as expAndLevels"
+             style="flex-grow: 1; display: flex; height: 100%; align-items: center; justify-content: center;">
+            <img [src]="'./assets/media/ranks/' + expAndLevels[0].imageCurrentLevel + '.png'" style="height: 75px; margin-left: 25px;"/>
+            <ngb-progressbar
+                    [value]="expAndLevels[0].percentageOfLevelCompleted"
+                    height="7px">
+            </ngb-progressbar>
+            <img [src]="'./assets/media/ranks/' + expAndLevels[0].imageNextLevel + '.png'" style="height: 75px; margin-right: 25px;"/>
+        </div>
+
+        <div style="display: flex; height: 100%;">
+            <div class="btn btn-square font-weight-bold"
+                 [ngClass]="{'active': selectedPage === 'stats'}"
+                 (click)="selectPage('stats')">
+                <i class="far fa-chart-bar icon-2x mr-1"></i>
+                <span>Stats</span>
+            </div>
+            <div class="btn font-weight-bold"
+                 style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
+                 [ngClass]="{'active': selectedPage === 'charts'}"
+                 (click)="selectPage('charts')">
+                <i class="fas fa-history icon-2x mr-1"></i>
+                <span>Charts</span>
+            </div>
         </div>
     </div>
-    <div class="col-lg-9"></div>
+
+    <!--<div>
+        <form style="width: 60%; padding-left: 20px;" [formGroup]="options">
+            <mat-checkbox formControlName="compareChecked" (change)="checkboxChange()">Compare</mat-checkbox>
+            <mat-form-field style="width: 100%" *ngIf="options.value.compareChecked">
+                <input type="text" placeholder="User" aria-label="User" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredNames$ | async" [value]="option.displayName" style="background-color: #546B5F" (onSelectionChange)="selectionChange(option, $event);">
+                        {{ option.displayName }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+    </div>-->
 </div>
+
+

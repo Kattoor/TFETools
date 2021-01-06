@@ -7,7 +7,7 @@ SELECT dsc,
        "maxPlayer",
        "blueTeam",
        "redTeam",
-        "countryFlag",
+        "country",
        "steamStartUrl",
        round((json_array_length("blueTeam") + json_array_length("redTeam")) / "maxPlayer"::dec * 100)::int as "percentageFilled"
 FROM lobbies

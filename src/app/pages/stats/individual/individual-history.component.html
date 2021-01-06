@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-lg-4">
+        <div class="row">
+            <app-activity class="col-lg-12" [stats$]="activity$"></app-activity>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="row">
+            <app-kd-chart class="col-lg-12" [id$]="id$" [compareUser$]="compareUser$"></app-kd-chart>
+        </div>
+        <div class="row">
+            <app-hs-chart class="col-lg-12" [id$]="id$" [compareUser$]="compareUser$"></app-hs-chart>
+        </div>
+        <div class="row">
+            <app-zone-time-chart class="col-lg-12" [id$]="id$" [compareUser$]="compareUser$"></app-zone-time-chart>
+        </div>
+        <div class="row">
+            <app-wins-losses-draws-chart class="col-lg-12" [id$]="id$"
+                                         [compareUser$]="compareUser$"></app-wins-losses-draws-chart>
+        </div>
+    </div>
+</div>

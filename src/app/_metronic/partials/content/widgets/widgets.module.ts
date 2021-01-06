@@ -29,10 +29,6 @@ import { MixedWidget10Component } from './mixed/mixed-widget10/mixed-widget10.co
 import { MixedWidget11Component } from './mixed/mixed-widget11/mixed-widget11.component';
 import { MixedWidget12Component } from './mixed/mixed-widget12/mixed-widget12.component';
 import { MixedWidget14Component } from './mixed/mixed-widget14/mixed-widget14.component';
-// Stats
-import { StatsWidget10Component } from './stats/stats-widget10/stats-widget10.component';
-import { StatsWidget11Component } from './stats/stats-widget11/stats-widget11.component';
-import { StatsWidget12Component } from './stats/stats-widget12/stats-widget12.component';
 // Tiles
 import { TilesWidget1Component } from './tiles/tiles-widget1/tiles-widget1.component';
 import { TilesWidget3Component } from './tiles/tiles-widget3/tiles-widget3.component';
@@ -46,16 +42,9 @@ import { DropdownMenusModule } from '../dropdown-menus/dropdown-menus.module';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { Widget3DropdownComponent } from './lists/lists-widget3/widget3-dropdown/widget3-dropdown.component';
 import { Widget4DropdownComponent } from './lists/lists-widget4/widget4-dropdown/widget4-dropdown.component';
-import { TfeTableLobbiesComponent } from './base-tables/tfe-tables-lobbies/tfe-table-lobbies.component';
-import { TfeWidgetStatsComponent } from './mixed/tfe-widget-stats/tfe-widget-stats.component';
-import { TfeWidgetStats2Component } from './mixed/tfe-widget-stats2/tfe-widget-stats2.component';
-import {RouterModule} from "@angular/router";
 
 @NgModule({
     declarations: [
-        TfeTableLobbiesComponent,
-        TfeWidgetStatsComponent,
-        TfeWidgetStats2Component,
         // Advanced Tables
         AdvanceTablesWidget1Component,
         AdvanceTablesWidget2Component,
@@ -83,10 +72,6 @@ import {RouterModule} from "@angular/router";
         MixedWidget11Component,
         MixedWidget12Component,
         MixedWidget14Component,
-        // Stats
-        StatsWidget10Component,
-        StatsWidget11Component,
-        StatsWidget12Component,
         // Tiles,
         TilesWidget1Component,
         TilesWidget3Component,
@@ -105,12 +90,8 @@ import {RouterModule} from "@angular/router";
         InlineSVGModule,
         NgApexchartsModule,
         NgbDropdownModule,
-        RouterModule,
     ],
   exports: [
-    TfeTableLobbiesComponent,
-    TfeWidgetStatsComponent,
-    TfeWidgetStats2Component,
     // Advanced Tables
     AdvanceTablesWidget1Component,
     AdvanceTablesWidget2Component,
@@ -138,10 +119,6 @@ import {RouterModule} from "@angular/router";
     MixedWidget11Component,
     MixedWidget12Component,
     MixedWidget14Component,
-    // Stats
-    StatsWidget10Component,
-    StatsWidget11Component,
-    StatsWidget12Component,
     // Tiles,
     TilesWidget1Component,
     TilesWidget3Component,

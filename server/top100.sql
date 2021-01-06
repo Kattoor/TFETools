@@ -1,4 +1,4 @@
-SELECT _id,
+SELECT lastRecordOfPlayer._id,
        "displayName",
        level,
        exp,
@@ -16,12 +16,26 @@ SELECT _id,
        "timeInZone",
        "pspTaken",
        "flagsTaken",
-       "flagsTaking"
-
+       "flagsTaking",
+       ROW_NUMBER() OVER (ORDER BY lastRecordOfPlayer.exp DESC) as "currentRank",
+       sub.rank as "previousRank"
 FROM (
-         SELECT *, ROW_NUMBER() OVER (PARTITION BY _id ORDER BY date DESC) rn
+         SELECT *,
+                ROW_NUMBER() OVER (PARTITION BY _id ORDER BY date DESC) rn
          FROM stats
-     ) onlyGetMostRecentRecordOfPlayer
-where rn = 1
-order by exp desc
-limit 100;
+     ) lastRecordOfPlayer
+
+         LEFT JOIN (
+    SELECT _id, date, ROW_NUMBER() OVER (ORDER BY exp DESC) as rank
+    FROM (
+             SELECT _id, date, exp, ROW_NUMBER() OVER (PARTITION BY _id ORDER BY date DESC) rnYesterday
+             FROM stats
+             WHERE date < ((SELECT MAX(date) FROM stats) - 86400000)
+         ) lastRecordOfPlayerYesterday
+    WHERE rnYesterday = 1
+    ORDER BY exp DESC
+    LIMIT 100
+) sub ON lastRecordOfPlayer._id = sub._id
+WHERE rn = 1
+ORDER BY exp DESC
+LIMIT 100;

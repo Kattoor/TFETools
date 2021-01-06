@@ -27,6 +27,8 @@ export interface Stats {
     kdRatio: number;
     headshotPercentage: number;
     position: number;
+    currentRank: number;
+    previousRank: number;
 }
 
 @Component({

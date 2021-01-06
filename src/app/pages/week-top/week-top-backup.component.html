@@ -1,0 +1,41 @@
+
+
+<div style="display: flex; justify-content: center; width: 100%;">
+    <div class="timeline timeline-4" style="width: 50%;">
+        <div class="timeline-bar"></div>
+        <div class="timeline-items">
+            <ng-container *ngFor="let yearRecord of topUsers$ | async">
+                <ng-container *ngFor="let monthRecord of yearRecord.months">
+                    <ng-container *ngFor="let user of monthRecord.users; index as i">
+                        <div class="timeline-item" [ngClass]="'timeline-item-' + (i % 2 === 0 ? 'left' : 'right')">
+                            <div class="timeline-media">
+                                <img [src]="user.steamAvatarUrl">
+                            </div>
+                            <div class="timeline-label text-primary">
+                                <span class="text-primary font-weight-bold">WEEK {{monthRecord.users.length - i}}</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>{{user.displayName}}</h3>
+                                <h6>Exp: {{user.exp}}</h6>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <div style="position: relative; width: 100%; margin-top: 50px; margin-bottom: 25px; z-index: 1; text-align: center;">
+                        <h1 style="background-color: white; display: inline-block; border-radius: 25px; padding: 0 15px; text-align: center;">
+                            {{months[monthRecord.month]}}
+                        </h1>
+                    </div>
+                </ng-container>
+
+                <div style="position: relative; width: 100%; margin-top: 50px; margin-bottom: 25px; z-index: 1; text-align: center;">
+                    <h1 style="background-color: white; display: inline-block; border-radius: 25px; padding: 0 15px; text-align: center;">
+                        {{yearRecord.year}}
+                    </h1>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+
+</div>

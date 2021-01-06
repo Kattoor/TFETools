@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {forkJoin, Observable, of} from 'rxjs';
+import {combineLatest, filter, flatMap, map} from 'rxjs/operators';
+import {NameAndId} from './individual-history.component';
+import {HttpClient} from '@angular/common/http';
 
 interface TkothZoneTimerResult {
     timeInZone: number;
@@ -13,23 +15,84 @@ interface TkothZoneTimerResult {
 })
 export class ZoneTimeChartComponent implements OnInit {
 
+    @Input() id$: Observable<number>;
+    @Input() compareUser$: Observable<NameAndId>;
+
     @Input() stats$: Observable<TkothZoneTimerResult[]>;
+    @Input() compareStats$: Observable<TkothZoneTimerResult[]>;
 
     chartOptions$: Observable<any>;
 
-    constructor() {
+    constructor(private http: HttpClient) {
     }
 
     ngOnInit(): void {
-        this.chartOptions$ = this.stats$.pipe(
-            map(data => this.getChartOptions(data)));
+        this.chartOptions$ = this.id$
+            .pipe(
+                filter(id => id !== null),
+                combineLatest(this.compareUser$),
+                flatMap(([id, compareUser]) =>
+                    forkJoin({
+                        user: this.http.get<TkothZoneTimerResult[]>('/api/stats/individual/tkothzonetimer?id=' + id),
+                        compareUser: compareUser
+                            ? this.http.get<TkothZoneTimerResult[]>('/api/stats/individual/tkothzonetimer?id=' + compareUser._id)
+                            : of(null),
+                        compareUsername: of(compareUser?.displayName)
+                    })
+                ),
+                map(data => this.getChartOptions(data)));
     }
 
-    getChartOptions(data: TkothZoneTimerResult[]) {
+    syncDataPoints(data) {
+        data.user = data.user.map(u => {
+            u.date = +u.date;
+            return u;
+        });
+
+        data.compareUser = data.compareUser.map(u => {
+            u.date = +u.date;
+            return u;
+        });
+
+        const userTimePoints = data.user.map(user => user.date);
+        const compareUserTimePoints = data.compareUser.map(user => user.date);
+        const allTimePoints: number[] = userTimePoints.concat(compareUserTimePoints);
+
+        const missingInUser = allTimePoints.filter(timePoint => !userTimePoints.find(userTimePoint => timePoint === userTimePoint));
+        const missingInCompareUser = allTimePoints.filter(timePoint => !compareUserTimePoints.find(userTimePoint => timePoint === userTimePoint));
+
+        missingInUser.forEach(missingTimePoint => {
+            const value = data.user.reduce((result, current) => current.date < missingTimePoint ? current : result, data.user[0]);
+            data.user.push(Object.assign({}, value, {date: missingTimePoint}));
+            data.user.sort((u1, u2) => u1.date - u2.date);
+            /*todo: push to correct index instead of sorting whole array every iteration*/
+        });
+
+        missingInCompareUser.forEach(missingTimePoint => {
+            const value = data.compareUser.reduce((result, current) =>
+                current.date < missingTimePoint ? current : result, data.compareUser[0]);
+
+            data.compareUser.push(Object.assign({}, value, {date: missingTimePoint}));
+            data.compareUser.sort((u1, u2) => u1.date - u2.date);
+            /*todo: push to correct index instead of sorting whole array every iteration*/
+        });
+    }
+
+    getChartOptions(data: { user: TkothZoneTimerResult[], compareUser: TkothZoneTimerResult[], compareUsername: string }) {
+        if (data.compareUser) {
+            this.syncDataPoints(data);
+        }
+
         return {
             series: [
-                {name: 'Time', type: 'line', data: data.map(record => ({x: +record.date, y: record.timeInZone}))},
-            ],
+                {name: 'Time', type: 'line', data: data.user.map(record => ({x: +record.date, y: record.timeInZone}))},
+            ].concat(data.compareUser ? [
+                {
+                    name: 'Time (' + data.compareUsername + ')',
+                    type: 'line',
+                    data: data.compareUser.map(record => ({x: +record.date, y: record.timeInZone}))
+                },
+            ] : []),
             colors: ['#FFA800'],
             chart: {
                 height: 350,
@@ -47,7 +110,11 @@ export class ZoneTimeChartComponent implements OnInit {
                     },
                 }
             },
-            stroke: {curve: 'smooth', width: 1},
+            stroke: {
+                curve: 'stepline',
+                width: 1,
+                dashArray: [0, 10]
+            },
             grid: {
                 borderColor: 'rgba(0, 0, 0, .4)',
                 row: {

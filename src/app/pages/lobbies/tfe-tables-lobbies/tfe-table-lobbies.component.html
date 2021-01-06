@@ -1,0 +1,37 @@
+<div class="card card-custom" [ngClass]="cssClass">
+    <!-- Header -->
+    <div class="card-header border-0 pt-5">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label font-weight-bolder text-dark">Lobbies</span>
+            <span class="text-muted mt-3 font-weight-bold font-size-sm">
+        There are currently {{totalAmountOfPlayers$ | async}} players online
+      </span>
+        </h3>
+    </div>
+    <!-- Body -->
+    <div class="card-body pt-2 pb-0 mt-n3">
+        <div class="tab-content mt-5">
+            <div
+                    class="tab-pane fade active show"
+                    id="kt_tab_pane_6_1"
+                    role="tabpanel"
+                    aria-labelledby="kt_tab_pane_6_1"
+            >
+                <div class="table-responsive">
+                    <table class="table table-borderless table-vertical-center">
+                        <thead>
+                        <tr>
+                            <th class="p-0 w-50px"></th>
+                            <th class="p-0 min-w-200px"></th>
+                            <th class="p-0 min-w-150px"></th>
+                            <th class="p-0 min-w-150px"></th>
+                            <th class="p-0 min-w-40px"></th>
+                        </tr>
+                        </thead>
+                        <tbody app-tfe-table-lobbies-body [lobbies$]="lobbies$"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

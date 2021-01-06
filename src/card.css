@@ -10,7 +10,7 @@
 
 }
 
-.card span, .card a, .card p, .card div, .card h3 {
+.card span, .card a, .card p, .card div, .card h3, .card div.btn i {
     color: white !important;
 }
 

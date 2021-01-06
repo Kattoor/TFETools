@@ -1,0 +1,49 @@
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #546B5F;
+}
+
+.mat-ripple {
+    display: none;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+    color: #546B5F;
+}
+
+.mat-input-element {
+    caret-color: #546B5F;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #546B5F;
+}
+
+div.btn.active {
+    background-color: rgba(84, 107, 95, .85);
+}
+
+div.btn.inactive {
+    background-color: rgba(84, 107, 95, .2);
+}
+
+div.btn:hover {
+    background-color: rgba(84, 107, 95, 1);
+}
+
+div.btn {
+    height: 100%;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 125px;
+}
+
+ngb-progressbar {
+    width: 80%;
+    background-color: #0c110f !important;
+}
+
+ngb-progressbar div {
+    background: linear-gradient(90deg, rgba(44,82,62,1) 0%, rgba(65,150,89,1) 100%) !important;
+}

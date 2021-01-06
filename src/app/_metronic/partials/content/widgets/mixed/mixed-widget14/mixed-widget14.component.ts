@@ -30,7 +30,6 @@ export class MixedWidget14Component implements OnInit {
   }
 
   getChartOptions() {
-    const strokeColor = '#D13647';
     return {
       series: [74],
       chart: {
@@ -58,8 +57,8 @@ export class MixedWidget14Component implements OnInit {
             },
           },
           track: {
-            background: this.colorsThemeLightSuccess,
-            strokeWidth: '100%',
+            background: '#fff',
+            strokeWidth: '67%',
           },
         },
       },

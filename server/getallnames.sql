@@ -1,0 +1,1 @@
+SELECT distinct _id, "displayName" FROM stats;

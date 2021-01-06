@@ -1,20 +1,24 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { LobbiesComponent } from './lobbies.component';
-import { DashboardsModule } from '../../_metronic/partials/content/dashboards/dashboards.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {LobbiesComponent} from './lobbies.component';
+import {LobbiesRoutingModule} from './lobbies-routing.module';
+import {LobbiesEmbedComponent} from './lobbies-embed.component';
+import {TfeTableLobbiesComponent} from './tfe-tables-lobbies/tfe-table-lobbies.component';
+import {InlineSVGModule} from 'ng-inline-svg';
+import {TfeTableLobbiesBodyComponent} from './tfe-tables-lobbies/tfe-table-lobbies-body.component';
 
 @NgModule({
-  declarations: [LobbiesComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: LobbiesComponent,
-      },
-    ]),
-    DashboardsModule,
-  ],
+    declarations: [
+        LobbiesComponent,
+        LobbiesEmbedComponent,
+        TfeTableLobbiesComponent,
+        TfeTableLobbiesBodyComponent
+    ],
+    imports: [
+        CommonModule,
+        LobbiesRoutingModule,
+        InlineSVGModule
+    ],
 })
-export class LobbiesModule {}
+export class LobbiesModule {
+}

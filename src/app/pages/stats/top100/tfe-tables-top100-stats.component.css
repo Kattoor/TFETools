@@ -58,3 +58,11 @@ td:last-child {
 .dropdown-menu {
     background-color: #546B5F;
 }
+
+.green-tooltip .tooltip-inner {
+    background-color: #546B5F;
+}
+
+.green-tooltip .arrow::before {
+    border-left-color: #546B5F;
+}
